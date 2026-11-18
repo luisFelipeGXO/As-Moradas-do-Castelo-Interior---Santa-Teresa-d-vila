@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Castelo Interior — As Moradas de Santa Teresa d'Ávila</title>
+    <style>
+        :root {
+            --bg: #ebe3d1;
+            --bg-card: #fbf7ee;
+            --bg-card-alt: #f5efe0;
+            --ink: #2c2418;
+            --ink-soft: #4a4030;
+            --muted: #7a6e5e;
+            --border: #d4c5a3;
+            --border-strong: #b8a77f;
+            --gold: #9c7a3c;
+            --gold-dark: #6b5024;
+            --carmel: #5c3a21;
+            --carmel-bg: #f3ebe0;
+            --mortal: #6b2525;
+            --mortal-bg: #f7eaea;
+            --venial: #8b5a1a;
+            --venial-bg: #faf2e0;
+            --nada: #3d5c3d;
+            --nada-bg: #eaf0e8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Georgia, 'Times New Roman', 'Iowan Old Style', serif;
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(180,150,100,0.06) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(180,150,100,0.05) 0%, transparent 45%);
+            background-attachment: fixed;
+            color: var(--ink);
+            min-height: 100vh;
+            padding: 34px 16px 64px;
+            display: flex;
+            justify-content: center;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        .app { width: 100%; max-width: 740px; }
+
+        /* ---------- Cabeçalho ---------- */
+        .topo {
+            text-align: center;
+            margin-bottom: 34px;
+            padding-bottom: 22px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        .topo::after {
+            content: '✦ ✝ ✦';
+            position: absolute;
+            bottom: -11px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg);
+            padding: 0 16px;
+            color: var(--gold);
+            font-size: .95rem;
+            line-height: 1;
+            letter-spacing: 3px;
+        }
+        .topo h1 {
+            font-size: clamp(1.45rem, 4.2vw, 1.98rem);
+            font-weight: normal;
+            color: var(--ink);
+            letter-spacing: 1.4px;
+            margin-bottom: 8px;
+        }
+        .topo .sub {
+            color: var(--muted);
+            font-size: .75rem;
+            letter-spacing: 2px;
+            font-family: system-ui, -apple-system, sans-serif;
+            text-transform: uppercase;
+        }
+
+        /* ---------- Card ---------- */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 38px 34px;
+            box-shadow:
+                0 1px 2px rgba(60,40,20,0.06),
+                0 12px 32px rgba(60,40,20,0.06);
+            position: relative;
+        }
+        @media(max-width: 520px) { .card { padding: 26px 18px; } }
+
+        /* ---------- Telas ---------- */
+        .tela { display: none; }
+        .tela.ativa { display: block; animation: fade .38s ease; }
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: none; }
+        }
+
+        /* ---------- Textos ---------- */
+        .card p {
+            line-height: 1.78;
+            color: var(--ink-soft);
+            margin-bottom: 14px;
+            font-size: .98rem;
+        }
+        .card ul { margin: 0 0 16px 22px; }
+        .card li {
+            line-height: 1.75;
+            color: var(--ink-soft);
+            margin-bottom: 10px;
+            font-size: .95rem;
+        }
+        .card strong { color: var(--gold-dark); font-weight: bold; }
+        .destaque {
+            font-size: 1.06rem;
+            color: var(--gold-dark);
+            text-align: center;
+            margin-bottom: 22px;
+            font-style: italic;
+            line-height: 1.65;
+        }
+
+        .lista-moradas { list-style: none; margin-left: 0 !important; }
+        .lista-moradas li {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px dotted var(--border);
+        }
+        .lista-moradas li:last-child { border-bottom: none; padding-bottom: 0; }
+        .num-morada {
+            flex: 0 0 auto;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 1px solid var(--gold);
+            background: var(--bg-card-alt);
+            color: var(--gold-dark);
+            font-size: .8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 3px;
+            font-weight: bold;
+        }
+
+        /* ---------- Aviso ---------- */
+        .aviso {
+            margin: 22px 0;
+            padding: 16px 20px;
+            border-left: 3px solid var(--gold);
+            background: var(--bg-card-alt);
+            font-size: .88rem;
+            line-height: 1.72;
+            color: var(--ink-soft);
+            font-family: system-ui, -apple-system, sans-serif;
+            border-radius: 0 3px 3px 0;
+        }
+        .aviso strong { color: var(--gold-dark); }
+
+        /* ---------- Botões ---------- */
+        .btn {
+            display: block;
+            width: 100%;
+            font-family: inherit;
+            font-size: 1rem;
+            padding: 15px 26px;
+            border-radius: 3px;
+            border: 1px solid var(--gold);
+            background: var(--gold);
+            color: #fdfaf3;
+            cursor: pointer;
+            letter-spacing: 1.3px;
+            transition: all .2s;
+            margin-top: 14px;
+        }
+        .btn:hover {
+            background: var(--gold-dark);
+            border-color: var(--gold-dark);
+        }
+        .btn:active { transform: translateY(1px); }
+        .btn-secundario {
+            background: transparent;
+            border-color: var(--border-strong);
+            color: var(--muted);
+            font-size: .9rem;
+            padding: 11px 20px;
+            margin-top: 16px;
+            letter-spacing: .8px;
+        }
+        .btn-secundario:hover {
+            background: var(--bg-card-alt);
+            color: var(--gold-dark);
+            border-color: var(--gold);
+        }
+        .btn-secundario:disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .acoes-nav {
+            display: flex;
+            gap: 12px;
+            margin-top: 26px;
+        }
+        .acoes-nav .btn { margin-top: 0; }
+        .acoes-nav .btn-secundario { flex: 0 0 35%; }
+
+        /* ---------- Pergunta ---------- */
+        .progresso-topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: .74rem;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+        .tag {
+            color: var(--gold-dark);
+            border: 1px solid var(--border-strong);
+            padding: 3px 12px;
+            border-radius: 2px;
+            font-size: .66rem;
+            letter-spacing: 2px;
+        }
+        .barra-progresso {
+            height: 4px;
+            background: var(--bg-card-alt);
+            overflow: hidden;
+            margin-bottom: 28px;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+        }
+        .barra-progresso > div {
+            height: 100%;
+            width: 0;
+            background: var(--gold);
+            transition: width .4s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .pergunta-titulo {
+            font-size: clamp(1.12rem, 2.8vw, 1.32rem);
+            font-weight: normal;
+            line-height: 1.5;
+            color: var(--ink);
+            margin-bottom: 12px;
+        }
+        .pergunta-desc {
+            font-size: .95rem;
+            line-height: 1.72;
+            color: var(--ink-soft);
+            margin-bottom: 26px;
+        }
+
+        /* ---------- Escala 1-10 ---------- */
+        .escala {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 8px;
+        }
+        @media(max-width: 560px) {
+            .escala { grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        }
+
+        .opcao {
+            aspect-ratio: 1;
+            border-radius: 3px;
+            border: 1px solid var(--border-strong);
+            background: var(--bg-card-alt);
+            color: var(--ink);
+            font-family: inherit;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all .15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .opcao:hover {
+            border-color: var(--gold);
+            background: #f0e5c8;
+        }
+        .opcao.selecionada {
+            background: var(--gold);
+            border-color: var(--gold-dark);
+            color: #fdfaf3;
+            font-weight: bold;
+        }
+
+        .labels-escala {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 14px;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: .76rem;
+            line-height: 1.5;
+            color: var(--muted);
+        }
+        .labels-escala span { max-width: 46%; }
+        .labels-escala span:last-child { text-align: right; }
+
+        /* ---------- Diagrama Visual do Castelo (7 Círculos Concêntricos) ---------- */
+        .mapa-castelo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto 26px;
+            padding: 18px 12px;
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+        }
+        .mapa-titulo {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: .68rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+        .aneis-moradas {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+        .anel {
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border-strong);
+            background: var(--bg-card);
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: .74rem;
+            color: var(--muted);
+            transition: all .3s;
+        }
+        .anel.passada {
+            border-color: var(--gold);
+            color: var(--gold-dark);
+            background: #f3e9d2;
+        }
+        .anel.atual {
+            background: var(--gold);
+            border-color: var(--gold-dark);
+            color: #fdfaf3;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(107, 80, 36, 0.25);
+        }
+
+        /* ---------- Resultado ---------- */
+        .veredito {
+            text-align: center;
+            padding: 32px 20px;
+            border-radius: 3px;
+            margin-bottom: 24px;
+            border: 2px solid var(--gold);
+            color: var(--gold-dark);
+            background: var(--carmel-bg);
+            position: relative;
+            animation: fade .5s ease;
+        }
+        .veredito::before,
+        .veredito::after {
+            content: '';
+            position: absolute;
+            left: 22px;
+            right: 22px;
+            height: 1px;
+            background: currentColor;
+            opacity: .25;
+        }
+        .veredito::before { top: 10px; }
+        .veredito::after { bottom: 10px; }
+
+        .veredito .rotulo {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: .66rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: .8;
+            margin-bottom: 10px;
+        }
+        .veredito h2 {
+            font-size: clamp(1.35rem, 4.2vw, 1.78rem);
+            letter-spacing: 2px;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: var(--ink);
+        }
+        .veredito .veredito-sub {
+            font-size: .95rem;
+            color: var(--gold-dark);
+            margin-top: 6px;
+            font-weight: bold;
+        }
+        .veredito .veredito-desc {
+            margin-top: 10px;
+            font-style: italic;
+            font-size: .92rem;
+            opacity: .92;
+            margin-bottom: 0;
+            color: var(--ink-soft);
+        }
+
+        .veredito.exterior {
+            border-color: var(--mortal);
+            color: var(--mortal);
+            background: var(--mortal-bg);
+        }
+        .veredito.exterior h2 { color: var(--mortal); }
+
+        .veredito.ascetica {
+            border-color: var(--venial);
+            color: var(--venial);
+            background: var(--venial-bg);
+        }
+        .veredito.ascetica h2 { color: var(--venial); }
+
+        .veredito.mistica {
+            border-color: var(--nada);
+            color: var(--nada);
+            background: var(--nada-bg);
+        }
+        .veredito.mistica h2 { color: var(--nada); }
+
+        /* ---------- Pontuação ---------- */
+        .pontuacao-geral { margin-bottom: 26px; }
+        .barra {
+            height: 8px;
+            border-radius: 2px;
+            background: var(--bg-card-alt);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .barra > span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: var(--gold);
+            transition: width .9s cubic-bezier(.2,.8,.2,1);
+        }
+        .pontuacao-texto {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: .82rem;
+            color: var(--muted);
+            margin-top: 10px;
+            text-align: center;
+            letter-spacing: .4px;
+        }
+        .pontuacao-texto strong { color: var(--gold-dark); }
+
+        /* ---------- Subtítulos ---------- */
+        .subtitulo {
+            font-size: .74rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            font-family: system-ui, -apple-system, sans-serif;
+            font-weight: normal;
+            margin: 0 0 18px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ---------- Dimensões ---------- */
+        .dim { margin-bottom: 18px; }
+        .dim-topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: .82rem;
+            color: var(--ink-soft);
+            margin-bottom: 7px;
+        }
+        .dim-topo span:last-child {
+            color: var(--muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ---------- Caixa de Alerta / Perigos da Morada ---------- */
+        .caixa-perigos {
+            margin: 24px 0;
+            padding: 20px 22px;
+            background: var(--venial-bg);
+            border: 1px solid var(--border-strong);
+            border-left: 4px solid var(--venial);
+            border-radius: 3px;
+        }
+        .caixa-perigos strong.titulo-perigos {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--venial);
+            font-family: system-ui, -apple-system, sans-serif;
+            text-transform: uppercase;
+            font-size: .74rem;
+            letter-spacing: 2.2px;
+            font-weight: normal;
+        }
+        .caixa-perigos p {
+            font-size: .94rem;
+            margin-bottom: 0;
+            color: var(--ink-soft);
+        }
+
+        /* ---------- Nota Pastoral ---------- */
+        .nota-pastoral {
+            margin: 24px 0;
+            padding: 22px 24px;
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+        }
+        .nota-pastoral h4 {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: .72rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 14px;
+            font-weight: normal;
+        }
+        .nota-pastoral p {
+            font-size: .93rem;
+            line-height: 1.78;
+            color: var(--ink-soft);
+            margin-bottom: 10px;
+        }
+        .nota-pastoral p:last-child { margin-bottom: 0; }
+
+        /* Divisor decorativo */
+        .divisor {
+            text-align: center;
+            margin: 30px 0 22px;
+            position: relative;
+            color: var(--gold);
+        }
+        .divisor::before,
+        .divisor::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 38%;
+            height: 1px;
+            background: var(--border);
+        }
+        .divisor::before { left: 0; }
+        .divisor::after { right: 0; }
+        .divisor span {
+            display: inline-block;
+            background: var(--bg-card);
+            padding: 0 18px;
+            position: relative;
+            font-size: 1rem;
+            letter-spacing: 4px;
+        }
+
+        /* Rodapé */
+        .rodape {
+            text-align: center;
+            margin-top: 34px;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: .72rem;
+            letter-spacing: 1px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app">
+        <!-- Cabeçalho -->
+        <header class="topo">
+            <h1>O Castelo Interior</h1>
+            <div class="sub">Itinerário das Sete Moradas segundo Santa Teresa d'Ávila</div>
+        </header>
+
+        <!-- Cartão Principal -->
+        <main class="card">
+
+            <!-- Tela Inicial -->
+            <section id="intro-screen" class="tela ativa">
+                <p class="destaque">“Consideremos a nossa alma como um castelo todo de diamante ou de muito claro cristal, onde há muitos aposentos...” (Castelo Interior, I, 1, 1)</p>
+                <p>
+                    Em 1577, Santa Teresa de Jesus descreveu o caminho da alma rumo à união com Deus como uma jornada através de <strong>sete moradas concêntricas</strong>, em cujo centro habita o Rei da Glória. A porta de entrada para este castelo é a <strong>oração e a consideração</strong>.
+                </p>
+
+                <ul class="lista-moradas">
+                    <li>
+                        <span class="num-morada">I–III</span>
+                        <div><strong>Via Purgativa e Ascética (Moradas 1 a 3):</strong> A alma deixa o pecado mortal, entra no castelo pela oração, enfrenta o combate contra os apegos e busca uma vida virtuosa e ordenada.</div>
+                    </li>
+                    <li>
+                        <span class="num-morada">IV</span>
+                        <div><strong>Transição e Recolhimento (4ª Morada):</strong> Onde o esforço humano começa a ceder lugar à ação sobrenatural de Deus; nascem a oração de quietude e as primeiras purificações passivas.</div>
+                    </li>
+                    <li>
+                        <span class="num-morada">V–VII</span>
+                        <div><strong>Via Unitiva e Mística (Moradas 5 a 7):</strong> A alma morre para si mesma ("bicho-da-seda"), entrega totalmente sua vontade a Deus e alcança o desposório e o matrimônio espiritual.</div>
+                    </li>
+                </ul>
+
+                <div class="aviso">
+                    <strong>Como discernir com humildade:</strong> Responda às <strong>12 perguntas</strong> com total sinceridade diante de Deus (escala de <strong>1 a 10</strong>). Santa Teresa lembra que o verdadeiro sinal de avanço nas moradas não são consolação ou visões, mas o crescimento na <strong>humildade, no desapego e na caridade fraterna</strong>.
+                </div>
+
+                <button type="button" class="btn" onclick="startQuiz()">Adentrar o Castelo</button>
+            </section>
+
+            <!-- Tela do Questionário -->
+            <section id="quiz-screen" class="tela">
+                <div class="progresso-topo">
+                    <span id="category-badge" class="tag">Dimensão 1 de 4</span>
+                    <span id="progress-text">Pergunta 1 de 12</span>
+                </div>
+
+                <div class="barra-progresso">
+                    <div id="progress-bar" style="width: 8%"></div>
+                </div>
+
+                <h2 id="question-title" class="pergunta-titulo">Título da pergunta</h2>
+                <p id="question-desc" class="pergunta-desc">Descrição da pergunta</p>
+
+                <!-- Escala 1 a 10 -->
+                <div class="escala" id="quick-buttons">
+                    <!-- Gerado via JS -->
+                </div>
+
+                <div class="labels-escala">
+                    <span id="label-min">1 - Quase nunca / Muito pouco</span>
+                    <span id="label-max">10 - Constantemente / Plenamente</span>
+                </div>
+
+                <div class="acoes-nav">
+                    <button type="button" id="btn-prev" class="btn btn-secundario" onclick="prevQuestion()">Anterior</button>
+                    <button type="button" id="btn-next" class="btn" onclick="nextQuestion()">Próxima Pergunta</button>
+                </div>
+            </section>
+
+            <!-- Tela de Resultado / Diagnóstico das Moradas -->
+            <section id="result-screen" class="tela">
+                <!-- Mapa Visual das 7 Moradas -->
+                <div class="mapa-castelo">
+                    <div class="mapa-titulo">Localização no Castelo Interior</div>
+                    <div class="aneis-moradas" id="castle-rings">
+                        <!-- Gerado via JS -->
+                    </div>
+                </div>
+
+                <!-- Banner da Morada -->
+                <div id="verdict-header" class="veredito">
+                    <div class="rotulo">Discernimento Espiritual</div>
+                    <h2 id="verdict-title">Morada Identificada</h2>
+                    <div id="verdict-sub" class="veredito-sub">Subtítulo da etapa</div>
+                    <p id="verdict-subtitle" class="veredito-desc">Citação teresiana</p>
+                </div>
+
+                <!-- Pontuação Geral -->
+                <div class="pontuacao-geral">
+                    <div class="barra">
+                        <span id="total-bar" style="width: 0%"></span>
+                    </div>
+                    <div class="pontuacao-texto">
+                        Índice de Interioridade e União: <strong id="total-score">0</strong> de <strong>120</strong> pontos
+                    </div>
+                </div>
+
+                <!-- Detalhamento das 4 Dimensões Teresianas -->
+                <h3 class="subtitulo">Os 4 Pilares da Vida Interior</h3>
+
+                <div class="dim">
+                    <div class="dim-topo">
+                        <span>1. Vida de Oração e Porta do Castelo — <strong id="dim1-status">--</strong></span>
+                        <span id="dim1-score">0 / 30</span>
+                    </div>
+                    <div class="barra"><span id="dim1-bar"></span></div>
+                </div>
+
+                <div class="dim">
+                    <div class="dim-topo">
+                        <span>2. Combate Ascético e Desapego — <strong id="dim2-status">--</strong></span>
+                        <span id="dim2-score">0 / 30</span>
+                    </div>
+                    <div class="barra"><span id="dim2-bar"></span></div>
+                </div>
+
+                <div class="dim">
+                    <div class="dim-topo">
+                        <span>3. Recolhimento e Silêncio Interior — <strong id="dim3-status">--</strong></span>
+                        <span id="dim3-score">0 / 30</span>
+                    </div>
+                    <div class="barra"><span id="dim3-bar"></span></div>
+                </div>
+
+                <div class="dim">
+                    <div class="dim-topo">
+                        <span>4. Conformidade com a Vontade de Deus — <strong id="dim4-status">--</strong></span>
+                        <span id="dim4-score">0 / 30</span>
+                    </div>
+                    <div class="barra"><span id="dim4-bar"></span></div>
+                </div>
+
+                <!-- Características desta Morada -->
+                <h3 class="subtitulo">Retrato da Sua Alma Nesta Morada</h3>
+                <p id="verdict-explanation"></p>
+
+                <!-- Feras e Perigos Próprios da Morada -->
+                <div class="caixa-perigos">
+                    <strong class="titulo-perigos">Os Perigos e "Répteis" Próprios Desta Morada</strong>
+                    <p id="verdict-dangers"></p>
+                </div>
+
+                <!-- Conselho de Santa Teresa -->
+                <div id="pastoral-advice" class="nota-pastoral">
+                    <!-- Preenchido via JS -->
+                </div>
+
+                <div class="divisor"><span>✝</span></div>
+
+                <button type="button" class="btn" onclick="resetApp()">Refazer o Exame do Castelo</button>
+            </section>
+
+        </main>
+
+        <!-- Rodapé -->
+        <footer class="rodape">
+            Baseado na obra “O Castelo Interior ou As Moradas” (1577), de Santa Teresa de Jesus, Doutora da Igreja. As moradas não são degraus rígidos: a alma pode transitar entre aposentos conforme sua fidelidade à graça.
+        </footer>
+    </div>
+
+    <!-- Lógica JavaScript -->
+    <script>
+        /**
+         * 12 Perguntas divididas nas 4 Dimensões Teresianas (3 perguntas por dimensão = 30 pts cada; Total = 120 pts):
+         * - Dimensão 1 (Índices 0, 1, 2): Vida de Oração e Graça Santificante (Porta de Entrada)
+         * - Dimensão 2 (Índices 3, 4, 5): Combate Ascético, Virtudes e Desapego do Mundo
+         * - Dimensão 3 (Índices 6, 7, 8): Recolhimento Interior, Aridez e Quietude
+         * - Dimensão 4 (Índices 9, 10, 11): Conformidade Total com a Vontade de Deus e Caridade
+         */
+        const questions = [
+            // DIMENSÃO 1: VIDA DE ORAÇÃO E GRAÇA (PORTA DO CASTELO)
+            {
+                dim: 1,
+                category: "Dimensão 1 de 4 · Oração",
+                title: "1. Estado de Graça e Fuga do Pecado Mortal",
+                desc: "Você vive habitualmente em estado de graça (sem pecados mortais conscientes não confessados) e rejeita firmemente qualquer ocasião que o afaste da amizade com Deus?",
+                minLabel: "1 — Vivo preso a pecados graves",
+                maxLabel: "10 — Luto com firmeza para estar sempre na graça"
+            },
+            {
+                dim: 1,
+                category: "Dimensão 1 de 4 · Oração",
+                title: "2. Constância na Oração Mental e Pessoal",
+                desc: "Santa Teresa diz que a porta do castelo é a oração. Você reserva diariamente um tempo exclusivo para estar a sós com Deus (meditação, leitura orante, silêncio), além das orações vocais rápidas?",
+                minLabel: "1 — Raramente paro para rezar em silêncio",
+                maxLabel: "10 — Tenho horário fiel e diário de oração mental"
+            },
+            {
+                dim: 1,
+                category: "Dimensão 1 de 4 · Oração",
+                title: "3. Vida Sacramental (Eucaristia e Confissão)",
+                desc: "Você frequenta a Santa Missa com devoção, comunga com preparação interior e recorre regularmente ao Sacramento da Confissão para purificar até as faltas veniais?",
+                minLabel: "1 — Afastado ou apenas por obrigação",
+                maxLabel: "10 — Fonte central da minha vida espiritual"
+            },
+
+            // DIMENSÃO 2: COMBATE ASCÉTICO E DESAPEGO
+            {
+                dim: 2,
+                category: "Dimensão 2 de 4 · Desapego",
+                title: "4. Determinada Determinação na Luta Contra os Vícios",
+                desc: "Diante das tentações, vaidades, murmurações e maus hábitos, você os combate com 'determinada determinação' ou ainda faz concessões frequentes aos desejos do mundo?",
+                minLabel: "1 — Cedo facilmente aos gostos e vaidades",
+                maxLabel: "10 — Resisto com firmeza e vigilância contínua"
+            },
+            {
+                dim: 2,
+                category: "Dimensão 2 de 4 · Desapego",
+                title: "5. Desapego da Honra Própria e da Opinião Alheia",
+                desc: "Na Terceira Morada, Santa Teresa aponta o apego à honra e à reputação como grande obstáculo. Quando você é criticado, esquecido ou injustiçado, mantém a paz ou fica ferido no orgulho?",
+                minLabel: "1 — Fico muito magoado e busco me justificar",
+                maxLabel: "10 — Aceito ser esquecido ou humilhado em paz"
+            },
+            {
+                dim: 2,
+                category: "Dimensão 2 de 4 · Desapego",
+                title: "6. Liberdade em Relação aos Bens e Confortos",
+                desc: "O seu coração está livre da ansiedade por dinheiro, segurança material, prazeres e comodidades, usando as coisas deste mundo apenas como meios para servir a Deus?",
+                minLabel: "1 — Muito preso à segurança e ao conforto",
+                maxLabel: "10 — Coração livre e desapegado de bens"
+            },
+
+            // DIMENSÃO 3: RECOLHIMENTO INTERIOR E SILÊNCIO
+            {
+                dim: 3,
+                category: "Dimensão 3 de 4 · Interioridade",
+                title: "7. Domínio dos Sentidos e da Imaginação ('A Louca da Casa')",
+                desc: "Você consegue recolher-se no íntimo da alma ao longo do dia, mantendo a presença de Deus mesmo em meio ao trabalho, sem viver disperso nas notícias, telas e agitações?",
+                minLabel: "1 — Mente totalmente dispersa no exterior",
+                maxLabel: "10 — Vivo recolhido no centro da alma com Deus"
+            },
+            {
+                dim: 3,
+                category: "Dimensão 3 de 4 · Interioridade",
+                title: "8. Perseverança na Secura Espiritual (Aridez)",
+                desc: "Quando a oração fica seca, sem emoção nem consolação sensível, você permanece fiel como um servo que ama sem interesse, ou desanima e abandona a oração?",
+                minLabel: "1 — Só rezo bem quando sinto emoção",
+                maxLabel: "10 — Persevero com paz mesmo na secura total"
+            },
+            {
+                dim: 3,
+                category: "Dimensão 3 de 4 · Interioridade",
+                title: "9. Oração de Quietude e Silêncio Infuso (4ª Morada)",
+                desc: "Na oração, você já experimenta momentos em que o raciocínio se aquieta suavemente e a vontade fica presa a Deus numa paz profunda e silenciosa que você mesmo não conseguiu fabricar?",
+                minLabel: "1 — Minha oração é sempre esforço e palavras",
+                maxLabel: "10 — Deus recolhe minha alma em silêncio profundo"
+            },
+
+            // DIMENSÃO 4: CONFORMIDADE COM DEUS E CARIDADE
+            {
+                dim: 4,
+                category: "Dimensão 4 de 4 · União",
+                title: "10. Entrega da Própria Vontade ('O Bicho-da-Seda')",
+                desc: "Na Quinta Morada, a alma morre para o seu querer próprio. Diante de doenças, perdas, planos frustrados e cruzes pesadas, você diz de coração: 'Faça-se a Vossa vontade'?",
+                minLabel: "1 — Reclamo e quero que Deus faça o que peço",
+                maxLabel: "10 — Não tenho outra vontade senão a de Deus"
+            },
+            {
+                dim: 4,
+                category: "Dimensão 4 de 4 · União",
+                title: "11. Caridade Fraterna Concreta ('Marta e Maria Juntas')",
+                desc: "Para Santa Teresa, a prova infalível das altas moradas é o amor ao próximo. Você serve, perdoa e suporta os defeitos dos outros com doçura e alegria verdadeira?",
+                minLabel: "1 — Tenho pouca paciência com os defeitos alheios",
+                maxLabel: "10 — Amo e sirvo a todos vendo Cristo neles"
+            },
+            {
+                dim: 4,
+                category: "Dimensão 4 de 4 · União",
+                title: "12. Zelo pela Glória de Deus e Desejo da Vida Eterna",
+                desc: "A sua maior dor hoje é ver Deus ofendido no mundo, e a sua alegria consiste em sofrer ou trabalhar para que outras almas O amem, vivendo em união contínua com a Santíssima Trindade?",
+                minLabel: "1 — Penso mais nos meus próprios interesses",
+                maxLabel: "10 — Vivo consumido pelo amor e glória de Deus"
+            }
+        ];
+
+        // Estado da Aplicação
+        let currentQuestionIndex = 0;
+        let answers = new Array(questions.length).fill(5);
+
+        // Elementos DOM
+        const introScreen = document.getElementById('intro-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+
+        const categoryBadge = document.getElementById('category-badge');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTitle = document.getElementById('question-title');
+        const questionDesc = document.getElementById('question-desc');
+        const labelMin = document.getElementById('label-min');
+        const labelMax = document.getElementById('label-max');
+        const quickButtonsContainer = document.getElementById('quick-buttons');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+
+        function showScreen(screen) {
+            [introScreen, quizScreen, resultScreen].forEach(s => s.classList.remove('ativa'));
+            screen.classList.add('ativa');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function initScaleButtons() {
+            quickButtonsContainer.innerHTML = '';
+            for (let i = 1; i <= 10; i++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.textContent = i;
+                btn.className = 'opcao';
+                btn.onclick = () => selectValue(i);
+                quickButtonsContainer.appendChild(btn);
+            }
+        }
+
+        function selectValue(val) {
+            const numVal = parseInt(val, 10);
+            answers[currentQuestionIndex] = numVal;
+
+            const btns = quickButtonsContainer.querySelectorAll('.opcao');
+            btns.forEach((b, idx) => {
+                if (idx + 1 === numVal) {
+                    b.classList.add('selecionada');
+                } else {
+                    b.classList.remove('selecionada');
+                }
+            });
+        }
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            showScreen(quizScreen);
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestionIndex];
+            
+            categoryBadge.textContent = q.category;
+            progressText.textContent = `Pergunta ${currentQuestionIndex + 1} de ${questions.length}`;
+            const progressPercent = ((currentQuestionIndex + 1) / questions.length) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            questionTitle.textContent = q.title;
+            questionDesc.textContent = q.desc;
+            labelMin.textContent = q.minLabel;
+            labelMax.textContent = q.maxLabel;
+
+            selectValue(answers[currentQuestionIndex]);
+
+            btnPrev.disabled = currentQuestionIndex === 0;
+            btnNext.textContent = currentQuestionIndex === questions.length - 1 ? 'Descobrir Minha Morada' : 'Próxima Pergunta';
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            } else {
+                calculateMansion();
+            }
+        }
+
+        function resetApp() {
+            answers = new Array(questions.length).fill(5);
+            currentQuestionIndex = 0;
+            showScreen(introScreen);
+        }
+
+        /**
+         * Renderiza o mapa visual das 7 Moradas destacando a posição da alma
+         */
+        function renderCastleRings(moradaIndex) {
+            const ringsContainer = document.getElementById('castle-rings');
+            const labels = [
+                { id: 0, text: "Fora do Castelo" },
+                { id: 1, text: "1ª Morada" },
+                { id: 2, text: "2ª Morada" },
+                { id: 3, text: "3ª Morada" },
+                { id: 4, text: "4ª Morada" },
+                { id: 5, text: "5ª Morada" },
+                { id: 6, text: "6ª Morada" },
+                { id: 7, text: "7ª Morada (Centro)" }
+            ];
+
+            ringsContainer.innerHTML = '';
+            labels.forEach(item => {
+                if (item.id === 0 && moradaIndex > 0) return; // Só mostra "Fora" se o índice for 0
+                const span = document.createElement('span');
+                span.className = 'anel';
+                span.textContent = item.text;
+
+                if (item.id === moradaIndex) {
+                    span.classList.add('atual');
+                } else if (item.id < moradaIndex && item.id > 0) {
+                    span.classList.add('passada');
+                }
+                ringsContainer.appendChild(span);
+            });
+        }
+
+        /**
+         * Motor de Discernimento Teresiano (As Sete Moradas)
+         */
+        function calculateMansion() {
+            showScreen(resultScreen);
+
+            // Cálculo das 4 Dimensões (cada uma de 3 a 30 pontos)
+            const d1 = answers[0] + answers[1] + answers[2]; // Oração e Graça
+            const d2 = answers[3] + answers[4] + answers[5]; // Combate Ascético e Desapego
+            const d3 = answers[6] + answers[7] + answers[8]; // Recolhimento e Silêncio
+            const d4 = answers[9] + answers[10] + answers[11]; // Conformidade e Caridade
+            const total = d1 + d2 + d3 + d4; // Máx 120 pontos
+
+            const qGrace = answers[0];
+            const qMentalPrayer = answers[1];
+            const qQuietude = answers[8];
+            const qWillSurrender = answers[9];
+            const qCharity = answers[10];
+
+            // Atualiza placares e barras
+            document.getElementById('dim1-score').textContent = `${d1} / 30`;
+            document.getElementById('dim2-score').textContent = `${d2} / 30`;
+            document.getElementById('dim3-score').textContent = `${d3} / 30`;
+            document.getElementById('dim4-score').textContent = `${d4} / 30`;
+            document.getElementById('total-score').textContent = total;
+
+            setTimeout(() => {
+                document.getElementById('total-bar').style.width = `${(total / 120) * 100}%`;
+                document.getElementById('dim1-bar').style.width = `${(d1 / 30) * 100}%`;
+                document.getElementById('dim2-bar').style.width = `${(d2 / 30) * 100}%`;
+                document.getElementById('dim3-bar').style.width = `${(d3 / 30) * 100}%`;
+                document.getElementById('dim4-bar').style.width = `${(d4 / 30) * 100}%`;
+            }, 60);
+
+            setDimStatus('dim1-status', d1, ['Incipiente', 'Fiel', 'Profunda']);
+            setDimStatus('dim2-status', d2, ['Apegada', 'Em Combate', 'Livre']);
+            setDimStatus('dim3-status', d3, ['Dispersa', 'Recolhida', 'Contemplativa']);
+            setDimStatus('dim4-status', d4, ['Vontade Própria', 'Submissa', 'Unida a Deus']);
+
+            const verdictHeader = document.getElementById('verdict-header');
+            const verdictTitle = document.getElementById('verdict-title');
+            const verdictSub = document.getElementById('verdict-sub');
+            const verdictSubtitle = document.getElementById('verdict-subtitle');
+            const verdictExplanation = document.getElementById('verdict-explanation');
+            const verdictDangers = document.getElementById('verdict-dangers');
+            const pastoralAdvice = document.getElementById('pastoral-advice');
+
+            let moradaIndex = 1;
+
+            // 0. FORA DO CASTELO (Sem estado de graça ou sem oração)
+            if (qGrace <= 3 || (d1 <= 9 && total <= 35)) {
+                moradaIndex = 0;
+                verdictHeader.className = "veredito exterior";
+                verdictTitle.textContent = "Ronda do Castelo (Exterior)";
+                verdictSub.textContent = "A alma ainda está fora dos muros, mas chamada a entrar";
+                verdictSubtitle.textContent = "“A porta para entrar neste castelo é a oração e a consideração.” (I Moradas, 1, 7)";
+                verdictExplanation.innerHTML = `
+                    Segundo Santa Teresa, as almas que vivem habitualmente em pecado mortal ou totalmente alheias à oração ainda permanecem no pátio exterior do castelo, cercadas pelas feras e trevas do mundo. Contudo, a luz que brilha no centro do castelo nunca deixa de iluminá-las e convidá-las à conversão.
+                `;
+                verdictDangers.innerHTML = `
+                    O maior perigo aqui é a cegueira espiritual: acostumar-se com a agitação exterior e acreditar que não há nada além das coisas materiais, deixando a alma paralisada fora de si mesma.
+                `;
+                pastoralAdvice.innerHTML = `
+                    <h4>Conselho de Santa Teresa para Entrar</h4>
+                    <p>Não desanime! O primeiro passo é buscar uma boa <strong>Confissão Sacramental</strong> para restaurar a graça na alma e começar a reservar <strong>15 minutos diários de oração silenciosa</strong> olhando para Cristo. Assim que você der esse passo, já terá cruzado a porta das Primeiras Moradas.</p>
+                `;
+            }
+            // 1. PRIMEIRAS MORADAS (Entrada, Humildade e Conhecimento Próprio)
+            else if (total <= 48 || d1 <= 14) {
+                moradaIndex = 1;
+                verdictHeader.className = "veredito ascetica";
+                verdictTitle.textContent = "Primeiras Moradas";
+                verdictSub.textContent = "Aposentos da Humildade e do Conhecimento Próprio";
+                verdictSubtitle.textContent = "“Ainda que sejam as primeiras moradas, são muito ricas e de tão grande preço que, se escaparem das feras, passarão adiante.” (I Moradas, 2, 12)";
+                verdictExplanation.innerHTML = `
+                    Você já entrou no Castelo! Sua alma está em estado de graça, possui bons desejos de agradar a Deus e começou a rezar. No entanto, ainda traz consigo muitos ruídos, distrações e hábitos antigos do mundo exterior que dificultam ver com clareza a beleza do Rei no centro.
+                `;
+                verdictDangers.innerHTML = `
+                    <strong>As feras e répteis do mundo exterior:</strong> O demônio tenta fazer a alma voltar para fora através da preguiça na oração, das companhias que esfriam a fé e do desânimo ao ver as próprias misérias.
+                `;
+                pastoralAdvice.innerHTML = `
+                    <h4>Como Avançar para as Segundas Moradas</h4>
+                    <p>Santa Teresa recomenda entrar frequentemente no <strong>“aposento do conhecimento próprio”</strong> (humildade), mas sem ficar olhando apenas para suas misérias: levante os olhos para a grandeza e misericórdia de Deus. Estabeleça um horário fixo para a oração diária.</p>
+                `;
+            }
+            // 2. SEGUNDAS MORADAS (O Combate Espiritual e os Chamados de Deus)
+            else if (total <= 66 || d2 <= 16) {
+                moradaIndex = 2;
+                verdictHeader.className = "veredito ascetica";
+                verdictTitle.textContent = "Segundas Moradas";
+                verdictSub.textContent = "O Campo de Batalha e a Perseverança na Oração";
+                verdictSubtitle.textContent = "“Aqui é grande a guerra, porque o entendimento já está mais vivo e as potências mais hábeis...” (II Moradas, 1, 2)";
+                verdictExplanation.innerHTML = `
+                    Você já ouve claramente os chamados de Deus através de boas leituras, sermões, inspirações na oração e acontecimentos da vida. Sua alma deseja avançar e já compreende o valor do céu, mas ainda sofre forte resistência interna entre o chamado de Deus e os antigos apegos.
+                `;
+                verdictDangers.innerHTML = `
+                    <strong>As serpentes venenosas da vontade dividida:</strong> O risco de dar um passo para frente e outro para trás, buscando consolações sensíveis na oração e pensando em desistir quando surgem a aridez e as tentações mais fortes.
+                `;
+                pastoralAdvice.innerHTML = `
+                    <h4>A Chave Mestra de Santa Teresa</h4>
+                    <p>Para vencer esta morada, Santa Teresa insiste numa única virtude: <strong>“uma determinada determinação de nunca parar até chegar à fonte da água viva, aconteça o que acontecer”</strong>. Abraçar a cruz e não depender de sentimentos bons na oração.</p>
+                `;
+            }
+            // 3. TERCEIRAS MORADAS (Vida Virtuosa, Ordenada e Exemplar)
+            else if (total <= 82 || d3 <= 18 || qQuietude <= 5) {
+                moradaIndex = 3;
+                verdictHeader.className = "veredito";
+                verdictTitle.textContent = "Terceiras Moradas";
+                verdictSub.textContent = "A Vida Ordenada, Virtuosa e Temerosa de Deus";
+                verdictSubtitle.textContent = "“Bem-aventurado o varão que teme ao Senhor...” (III Moradas, 1, 1)";
+                verdictExplanation.innerHTML = `
+                    Sua alma alcançou uma estabilidade admirável: você foge até dos pecados veniais deliberados, ama a penitência, pratica obras de caridade, mantém disciplina na oração e leva uma vida cristã séria e exemplar. É o ápice do esforço ascético humano auxiliado pela graça comum.
+                `;
+                verdictDangers.innerHTML = `
+                    <strong>A sutil soberba espiritual e o apego à própria honra:</strong> Como a alma já se vê ordenada, corre o risco de julgar os que ainda caem, ficar excessivamente sensível a pequenas críticas contra sua reputação e querer controlar o caminho espiritual pelo próprio esforço.
+                `;
+                pastoralAdvice.innerHTML = `
+                    <h4>O Salto para as Quarta Moradas</h4>
+                    <p>Santa Teresa adverte que muitas almas boas estacionam aqui por medo de perder a própria segurança. Para entrar nas moradas sobrenaturais, pratique a <strong>humildade profunda</strong>, obedeça com docilidade e entregue a Deus o controle total da sua vida, sem apego à própria honra.</p>
+                `;
+            }
+            // 4. QUARTAS MORADAS (Oração de Quietude e Começo do Sobrenatural)
+            else if (total <= 96 || qWillSurrender <= 7) {
+                moradaIndex = 4;
+                verdictHeader.className = "veredito mistica";
+                verdictTitle.textContent = "Quartas Moradas";
+                verdictSub.textContent = "A Oração de Quietude e o Dilatar do Coração";
+                verdictSubtitle.textContent = "“Não está a coisa em pensar muito, mas em amar muito; por isso, o que mais vos despertar a amar, isso fazei.” (IV Moradas, 1, 7)";
+                verdictExplanation.innerHTML = `
+                    Aqui começa o elemento puramente sobrenatural! Sua alma já percebe a diferença entre os gostos humanos fabricados pelo esforço e a <strong>paz silenciosa que nasce do íntimo de Deus</strong> ("as duas fontes"). Mesmo quando a imaginação ("a louca da casa") se agita, a vontade permanece recolhida em Deus.
+                `;
+                verdictDangers.innerHTML = `
+                    <strong>Querer forçar o silêncio com a mente:</strong> Tentar suspender o pensamento à força ou ficar ansioso quando a secura retorna. O demônio também pode tentar distrair a alma fazendo-a valorizar sentimentos mais do que a humildade.
+                `;
+                pastoralAdvice.innerHTML = `
+                    <h4>Conselho de Santa Teresa</h4>
+                    <p>Não force o entendimento nem tente "não pensar em nada". Quando Deus der o recolhimento, apenas <strong>descanse Nele em silêncio amoroso</strong>; quando houver secura, volte suavemente à meditação da humanidade de Cristo e cresça no amor concreto ao próximo.</p>
+                `;
+            }
+            // 5. QUINTAS MORADAS (O Bicho-da-Seda e a União de Vontades)
+            else if (total <= 108 || d4 <= 24) {
+                moradaIndex = 5;
+                verdictHeader.className = "veredito mistica";
+                verdictTitle.textContent = "Quintas Moradas";
+                verdictSub.textContent = "A Morte do Bicho-da-Seda e a União com a Vontade Divina";
+                verdictSubtitle.textContent = "“Morra, morra este bicho... e vereis a Deus como o bicho sai borboleta branca.” (V Moradas, 2, 6)";
+                verdictExplanation.innerHTML = `
+                    Sua alma vive um profundo processo de morte para o egoísmo e o amor-próprio. Você já não busca a si mesmo nem mesmo nas coisas espirituais: sua alegria consiste em conformar perfeitamente a sua vontade à vontade de Deus, aceitando cruzes, humilhações e trabalhos por puro amor.
+                `;
+                verdictDangers.innerHTML = `
+                    <strong>A ilusão de achar que já chegou ao fim:</strong> Após experimentar forte união na oração, a alma pode baixar a guarda e se descuidar das pequenas ocasiões de caridade ou impaciência no dia a dia.
+                `;
+                pastoralAdvice.innerHTML = `
+                    <h4>O Selo da Verdadeira União</h4>
+                    <p>Santa Teresa afirma que a verdadeira união das Quintas Moradas tem um único sinal infalível: <strong>o amor verdadeiro ao próximo</strong>. Se você ama quem o fere e serve com alegria sem esperar reconhecimento, Cristo já está transformando sua alma.</p>
+                `;
+            }
+            // 6. SEXTAS MORADAS (O Desposório Espiritual e as Purificações Profundas)
+            else if (total <= 116 || qCharity <= 9) {
+                moradaIndex = 6;
+                verdictHeader.className = "veredito mistica";
+                verdictTitle.textContent = "Sextas Moradas";
+                verdictSub.textContent = "O Desposório Espiritual e a Cruz Purificadora";
+                verdictSubtitle.textContent = "“Fica a alma tão ferida de amor pelo Esposo que só suspira por estar com Ele...” (VI Moradas, 2, 1)";
+                verdictExplanation.innerHTML = `
+                    A alma já está desposada com o Rei e arde num desejo intenso de vê-Lo e de que ninguém O ofenda. Nesta morada, Deus alterna toques altíssimos de amor com grandes provações interiores e exteriores (doenças, incompreensões, noites escuras) para purificar os últimos vestígios de imperfeição antes do centro.
+                `;
+                verdictDangers.innerHTML = `
+                    <strong>O desejo de fugir da cruz ou buscar fenômenos:</strong> Querer morrer logo para ver a Deus, esquecendo que o maior serviço ao Esposo é sofrer e trabalhar na terra pela salvação das almas.
+                `;
+                pastoralAdvice.innerHTML = `
+                    <h4>Permanecer Junto à Humanidade de Cristo</h4>
+                    <p>Mesmo nas alturas desta morada, Santa Teresa ensina enfaticamente: <strong>jamais se afaste da Sagrada Humanidade de Jesus Cristo</strong>. Ele é o caminho, a luz e o amparo em todas as provações até que abra as portas do centro.</p>
+                `;
+            }
+            // 7. SÉTIMAS MORADAS (Matrimônio Espiritual - Centro do Castelo)
+            else {
+                moradaIndex = 7;
+                verdictHeader.className = "veredito mistica";
+                verdictTitle.textContent = "Sétimas Moradas";
+                verdictSub.textContent = "O Centro do Castelo e o Matrimônio Espiritual";
+                verdictSubtitle.textContent = "“Para mim o viver é Cristo, e o morrer é lucro.” (VII Moradas, 2, 5 / Fl 1, 21)";
+                verdictExplanation.innerHTML = `
+                    No aposento mais íntimo onde habita a Santíssima Trindade, a alma vive em paz inalterável no seu centro profundo, mesmo quando exteriormente enfrenta trabalhos, dores e perseguições. <strong>“Marta e Maria andam juntas”</strong>: a contemplação mais alta une-se ao serviço mais humilde e fecundo pela Igreja.
+                `;
+                verdictDangers.innerHTML = `
+                    <strong>A vigilância humilde até o fim:</strong> Enquanto estamos nesta vida, nenhuma alma está isenta da necessidade da graça de Deus; por isso, quanto mais alta a morada, mais profunda é a humildade e o esquecimento de si mesmo.
+                `;
+                pastoralAdvice.innerHTML = `
+                    <h4>O Fruto Supremo do Castelo</h4>
+                    <p>Para isto servem todas as moradas, diz Santa Teresa: <strong>“Obras, obras!”</strong> — gerar filhos espirituais para Deus através do amor, da oração e do serviço silencioso aos irmãos, para a glória do Pai, do Filho e do Espírito Santo.</p>
+                `;
+            }
+
+            renderCastleRings(moradaIndex);
+        }
+
+        function setDimStatus(elementId, score, labels) {
+            const el = document.getElementById(elementId);
+            if (score <= 13) {
+                el.textContent = labels[0];
+                el.style.color = 'var(--mortal)';
+            } else if (score <= 22) {
+                el.textContent = labels[1];
+                el.style.color = 'var(--venial)';
+            } else {
+                el.textContent = labels[2];
+                el.style.color = 'var(--nada)';
+            }
+        }
+
+        window.onload = function() {
+            initScaleButtons();
+        };
+    </script>
+</body>
+</html>
